@@ -1,6 +1,7 @@
 package com.ksyun.start.camp.service;
 
 import com.ksyun.start.camp.dto.RegisterDto;
+import com.ksyun.start.camp.dto.UnregisterDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +34,26 @@ public class RegisterService {
             Map<String, RegisterDto> serviceMap = new ConcurrentHashMap<>();
             serviceMap.put(registerDto.getServiceId(), registerDto);
             serviceRegistry.put(registerDto.getServiceName(), serviceMap);
+        }
+        return true;
+    }
+
+    //服务注销
+    public Boolean unregister(UnregisterDto unregisterDto) {
+        //判断服务名称是否存在
+        if (serviceRegistry.containsKey(unregisterDto.getServiceName())) {
+            //服务名称存在，判断服务id是否存在
+            Map<String, RegisterDto> serviceMap = serviceRegistry.get(unregisterDto.getServiceName());
+            if (serviceMap.containsKey(unregisterDto.getServiceId())) {
+                //服务id存在，删除服务信息
+                serviceMap.remove(unregisterDto.getServiceId());
+            } else {
+                //服务id不存在，注销失败
+                return false;
+            }
+        } else {
+            //服务名称不存在，注销失败
+            return false;
         }
         return true;
     }

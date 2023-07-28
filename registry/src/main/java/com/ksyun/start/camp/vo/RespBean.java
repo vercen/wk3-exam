@@ -24,6 +24,9 @@ public class RespBean {
     public static RespBean success(Object obj) {
         return new RespBean(RespBeanEnum.SUCCESS.getCode(), RespBeanEnum.SUCCESS.getMessage(), obj);
     }
+    public static RespBean success(RespBeanEnum respBeanEnum) {
+        return new RespBean(respBeanEnum.getCode(), respBeanEnum.getMessage(), null);
+    }
     /**
      * 成功返回结果
      */

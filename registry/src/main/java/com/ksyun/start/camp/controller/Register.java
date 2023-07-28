@@ -1,6 +1,7 @@
 package com.ksyun.start.camp.controller;
 
 import com.ksyun.start.camp.dto.RegisterDto;
+import com.ksyun.start.camp.dto.UnregisterDto;
 import com.ksyun.start.camp.service.RegisterService;
 import com.ksyun.start.camp.vo.RespBean;
 import com.ksyun.start.camp.vo.RespBeanEnum;
@@ -25,5 +26,15 @@ public class Register {
             return RespBean.error(RespBeanEnum.SERVICE_ALREADY_EXISTS);
         }
         return RespBean.success();
+    }
+
+    //服务注销
+    @PostMapping("/api/unregister")
+    public Object unregister(@RequestBody UnregisterDto unregisterDto) {
+        Boolean unregister = registerService.unregister(unregisterDto);
+        if (!unregister) {
+            return RespBean.error(RespBeanEnum.SERVICE_NOT_EXISTS);
+        }
+        return RespBean.success(RespBeanEnum.UNREGISTERSUCCESS);
     }
 }

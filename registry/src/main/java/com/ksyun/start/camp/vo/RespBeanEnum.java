@@ -14,6 +14,8 @@ import lombok.ToString;
 public enum RespBeanEnum {
     // 服务注册成功
     SUCCESS(200, "服务注册成功"),
+    // 服务注销成功
+    UNREGISTERSUCCESS(200, "服务注销成功"),
     // 服务注册失败
     ERROR(500, "服务注册失败"),
     // 服务已经存在
