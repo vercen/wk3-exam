@@ -1,6 +1,9 @@
 package com.ksyun.start.camp.controller;
 
 import com.ksyun.start.camp.dto.RegisterDto;
+import com.ksyun.start.camp.service.RegisterService;
+import com.ksyun.start.camp.vo.RespBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,11 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class Register {
-    //POST /api/register
+    @Autowired
+    private RegisterService registerService;
     //服务注册
     @PostMapping("/api/register")
-    public void register(RegisterDto registerDto) {
-        //TODO
-
+    public Object register(RegisterDto registerDto) {
+        registerService.register(registerDto);
+        return RespBean.success();
     }
 }
