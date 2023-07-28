@@ -10,10 +10,8 @@ import com.ksyun.start.camp.vo.RespBean;
 import com.ksyun.start.camp.vo.RespBeanEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.ksyun.start.camp.service.HeartbeatService.lastHeartbeatTimestamps;
@@ -38,6 +36,8 @@ public class Register {
         if (!register) {
             return RespBean.error(RespBeanEnum.SERVICE_ALREADY_EXISTS);
         }
+        //服务注册成功，更新心跳时间戳
+        lastHeartbeatTimestamps.put(registerDto.getServiceId(), System.currentTimeMillis());
         return RespBean.success();
     }
 
@@ -66,6 +66,7 @@ public class Register {
     @GetMapping ("/api/discovery")
     public List<RegisterDto> discovery(@RequestParam(required = false) String name) {
         if (name != null) {
+            log.info("服务发现 {}" , name);
             return discoveryService.get(name);
         } else {
             return discoveryService.getAll();

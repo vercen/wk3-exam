@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+import static com.ksyun.start.camp.service.HeartbeatService.lastHeartbeatTimestamps;
 import static com.ksyun.start.camp.service.RegisterService.serviceRegistry;
 
 /**
@@ -34,6 +35,8 @@ public class UnregisterService {
             //服务名称不存在，注销失败
             return false;
         }
+        // 从心跳表中移除心跳超时的服务实例
+        lastHeartbeatTimestamps.remove(unregisterDto.getServiceId());
         return true;
     }
 }
