@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * 代表远端时间服务接口实现
@@ -75,6 +77,10 @@ public class TimeServiceImpl implements TimeService {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     String responseBody = EntityUtils.toString(entity);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    objectMapper.setDateFormat(dateFormat);
+                    //设置时区北京
+                    objectMapper.setTimeZone(TimeZone.getTimeZone("GMT"));
                     TimeDto timeDto = objectMapper.readValue(responseBody, TimeDto.class);
                     return timeDto;
                 }

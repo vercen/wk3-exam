@@ -4,6 +4,9 @@ import com.ksyun.start.camp.dto.TimeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 客户端服务实现
  */
@@ -22,9 +25,13 @@ public class ClientServiceImpl implements ClientService {
         // 2. 获取到自身的 serviceId 信息
         // 3. 组合相关信息返回
         //"Hello Kingsoft Clound Star Camp - [服务 ID] - 2023-07-25 12:34:56"
-        String time = timeDto.getResult();
+        Date result = timeDto.getResult();
+        // 设置日期格式
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // 格式化为北京时间字符串
+        String beijingTime = formatter.format(result);
         String serviceId = timeDto.getServiceId();
-        String info = "Hello Kingsoft Clound Star Camp - [" + serviceId + "] - " + time;
+        String info = "Hello Kingsoft Clound Star Camp - [" + serviceId + "] - " + beijingTime;
         return info;
     }
 }
