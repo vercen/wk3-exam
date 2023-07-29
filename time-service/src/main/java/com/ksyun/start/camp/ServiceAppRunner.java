@@ -45,7 +45,7 @@ public class ServiceAppRunner implements ApplicationRunner {
     @Value("${server.port}")
     private int servicePort;
 
-    private static final String serviceId = UUID.randomUUID().toString();
+    public static final String serviceId = UUID.randomUUID().toString();
 
 
 

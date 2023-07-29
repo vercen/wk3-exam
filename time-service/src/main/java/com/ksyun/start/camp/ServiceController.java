@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.ksyun.start.camp.ServiceAppRunner.serviceId;
+
 @RestController
 @RequestMapping("/api")
 public class ServiceController {
@@ -18,7 +20,7 @@ public class ServiceController {
     @GetMapping("/getDateTime")
     public ApiResponse getDateTime(@RequestParam("style") String style) {
         String dateTime = simpleTimeService.getDateTime(style);
-        return new ApiResponse(200, dateTime);
+        return new ApiResponse(dateTime, serviceId);
     }
 
 }

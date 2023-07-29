@@ -1,5 +1,7 @@
 package com.ksyun.start.camp.service;
 
+import com.ksyun.start.camp.dto.TimeDto;
+
 /**
  * 代表一个时间服务接口
  */
@@ -11,5 +13,5 @@ public interface TimeService {
      * @param style 时间格式
      * @return 指定格式的时间字符串
      */
-    String getDateTime(String style);
+    TimeDto getDateTime(String style);
 }

@@ -14,12 +14,12 @@ public class ApiResponse {
      * 代表此 API 的响应返回码
      * 200 表示成功，非 200 表示失败
      */
-    private int code;
+    private String result;
 
-    private String data;
+    private String serviceId;
 
-    public ApiResponse(int code, String data) {
-        this.code = code;
-        this.data = data;
+    public ApiResponse(String result, String serviceId) {
+        this.result = result;
+        this.serviceId = serviceId;
     }
 }
