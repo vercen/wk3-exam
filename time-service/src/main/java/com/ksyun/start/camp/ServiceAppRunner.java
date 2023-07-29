@@ -1,6 +1,5 @@
 package com.ksyun.start.camp;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ksyun.start.camp.dto.HeartbeatDto;
 import com.ksyun.start.camp.dto.RegisterDto;
 import com.ksyun.start.camp.utils.ToJsonUtil;
@@ -11,7 +10,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -32,9 +29,6 @@ import java.util.UUID;
 @Component
 @Slf4j
 public class ServiceAppRunner implements ApplicationRunner {
-    @Autowired
-    private ObjectMapper objectMapper;
-
     // 从配置文件中获取注册中心的地址
     @Value("${registry.url}")
     private String registryUrl;
