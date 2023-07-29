@@ -64,6 +64,7 @@ public class Register {
 
     //服务发现
     @GetMapping ("/api/discovery")
+    @ResponseBody
     public List<RegisterDto> discovery(@RequestParam(required = false) String name) {
         if (name != null) {
             log.info("服务发现 {}" , name);
