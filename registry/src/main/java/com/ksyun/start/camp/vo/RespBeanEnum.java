@@ -23,7 +23,7 @@ public enum RespBeanEnum {
     // 服务已经存在
     SERVICE_ALREADY_EXISTS(501, "服务已经存在"),
     // 服务不存在
-    SERVICE_NOT_EXISTS(502, "服务不存在"),
+    SERVICE_NOT_EXISTS(502, "服务不存在,请重新注册"),
     // 服务注册参数错误
     SERVICE_REGISTER_PARAM_ERROR(503, "服务注册参数错误");
     // 服务注销成功

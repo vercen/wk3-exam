@@ -27,7 +27,6 @@ public class HeartbeatService {
     // 定时任务，每隔一段时间检查心跳超时
     @Scheduled(fixedDelay = 10000) // 每隔10秒执行一次
     public void checkHeartbeatTimeout() {
-        log.info("检测心跳超时");
         long currentTimestamp = System.currentTimeMillis();
         Set<String> inactiveServiceIds = new HashSet<>();
         // 遍历所有服务实例的最后心跳时间

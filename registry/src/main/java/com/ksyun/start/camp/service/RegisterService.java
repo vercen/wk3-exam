@@ -32,14 +32,18 @@ public class RegisterService {
             } else {
                 //服务id不存在，新增服务信息
                 serviceMap.put(registerDto.getServiceId(), registerDto);
-                log.info("服务实例 {} 注册成功", registerDto.getServiceId());
+                log.info("服务 {} 实例 {} 注册成功", registerDto.getServiceName(), registerDto.getServiceId());
             }
         } else {
+            if (serviceIdToName.containsKey(registerDto.getServiceId())) {
+                //服务id存在，注册失败
+                return false;
+            }
             //服务名称不存在，新增服务名称
             Map<String, RegisterDto> serviceMap = new ConcurrentHashMap<>();
             serviceMap.put(registerDto.getServiceId(), registerDto);
             serviceRegistry.put(registerDto.getServiceName(), serviceMap);
-            log.info("服务 {} 注册成功", registerDto.getServiceName());
+            log.info("服务 {} 实例 {} 注册成功", registerDto.getServiceName(), registerDto.getServiceId());
         }
         serviceIdToName.put(registerDto.getServiceId(), registerDto.getServiceName());
         return true;

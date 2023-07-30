@@ -6,8 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static com.ksyun.start.camp.service.HeartbeatService.lastHeartbeatTimestamps;
+import static com.ksyun.start.camp.service.RegisterService.serviceIdToName;
 import static com.ksyun.start.camp.service.RegisterService.serviceRegistry;
 
 /**
@@ -25,8 +27,15 @@ public class UnregisterService {
             Map<String, RegisterDto> serviceMap = serviceRegistry.get(unregisterDto.getServiceName());
             if (serviceMap.containsKey(unregisterDto.getServiceId())) {
                 //服务id存在，删除服务信息
-                serviceMap.remove(unregisterDto.getServiceId());
-                log.info("服务实例 {} 注销成功", unregisterDto.getServiceId());
+                //判断信息是否一样
+                RegisterDto registerDto = serviceMap.get(unregisterDto.getServiceId());
+                if (Objects.equals(registerDto.getIpAddress(), unregisterDto.getIpAddress()) && Objects.equals(registerDto.getPort(), unregisterDto.getPort())) {
+                    serviceMap.remove(unregisterDto.getServiceId());
+                    log.info("服务实例 {} 注销成功", unregisterDto.getServiceId());
+                } else {
+                    log.info("服务实例 {} 注销失败,存在攻击行为，非服务端发起 ", unregisterDto.getServiceId());
+                    return false;
+                }
             } else {
                 //服务id不存在，注销失败
                 return false;
@@ -35,6 +44,9 @@ public class UnregisterService {
             //服务名称不存在，注销失败
             return false;
         }
+
+        // 从服务id对应服务名称表中移除服务id
+        serviceIdToName.remove(unregisterDto.getServiceId());
         // 从心跳表中移除心跳超时的服务实例
         lastHeartbeatTimestamps.remove(unregisterDto.getServiceId());
         return true;

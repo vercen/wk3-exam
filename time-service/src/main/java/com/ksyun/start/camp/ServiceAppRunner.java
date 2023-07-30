@@ -10,12 +10,14 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,28 +32,32 @@ import java.util.UUID;
 @Slf4j
 public class ServiceAppRunner implements ApplicationRunner {
     // 从配置文件中获取注册中心的地址
-    @Value("${registry.url}")
     private String registryUrl;
-
     // 获取当前服务的名称
-    @Value("${spring.application.name}")
     private String serviceName;
-
     // 从配置文件中获取当前服务的主机地址
-    @Value("${service.host}")
     private String serviceHost;
-
     // 从配置文件中获取当前服务的端口号
-    @Value("${server.port}")
     private int servicePort;
+    public static  String serviceId ;
+    private RegisterDto registerDto;
 
-    public static final String serviceId = UUID.randomUUID().toString();
-
+    @Autowired
+    public ServiceAppRunner(@Value("${spring.application.name}") String serviceName,
+                            @Value("${service.host}") String serviceHost,
+                            @Value("${server.port}") int servicePort,
+                            @Value("${registry.url}") String registryUrl) {
+        this.serviceName = serviceName;
+        this.serviceHost = serviceHost;
+        this.servicePort = servicePort;
+        this.registryUrl = registryUrl;
+        serviceId = DigestUtils.md5DigestAsHex((serviceName +serviceHost+servicePort).getBytes()).substring(0, 8);
+        registerDto = new RegisterDto(serviceName, serviceId, serviceHost, servicePort);
+    }
 
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        RegisterDto registerDto = new RegisterDto(serviceName, serviceId, serviceHost, servicePort);
 
         // 向 registry 服务注册当前服务
         registerService(registerDto);

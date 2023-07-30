@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.ksyun.start.camp.service.HeartbeatService.lastHeartbeatTimestamps;
+import static com.ksyun.start.camp.service.RegisterService.serviceIdToName;
 
 /**
  * @author vercen
@@ -55,11 +56,14 @@ public class Register {
     @PostMapping("/api/heartbeat")
     public Object heartbeat(@RequestBody HeartbeatDto heartbeatDto) {
         String serviceId = heartbeatDto.getServiceId();
-        if (serviceId != null) {
-            log.info("服务实例 {} 心跳检测", serviceId);
+        if (serviceId != null&&serviceIdToName.containsKey(serviceId)) {
+            log.info("检测到服务实例 {} 心跳", serviceId);
             lastHeartbeatTimestamps.put(serviceId, System.currentTimeMillis());
+            return RespBean.success(RespBeanEnum.HEARTBEAT);
+        }else {
+            return RespBean.error(RespBeanEnum.SERVICE_NOT_EXISTS);
         }
-        return RespBean.success(RespBeanEnum.HEARTBEAT);
+
     }
 
     //服务发现

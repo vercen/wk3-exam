@@ -3,6 +3,7 @@ package com.ksyun.start.camp.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author vercen
@@ -17,4 +18,17 @@ public class RegisterDto implements Serializable {
     private String serviceId;   // 服务id
     private String ipAddress;   // 服务ip地址
     private Integer port;    // 服务端口
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RegisterDto that = (RegisterDto) o;
+        return Objects.equals(serviceName, that.serviceName) && Objects.equals(serviceId, that.serviceId) && Objects.equals(ipAddress, that.ipAddress) && Objects.equals(port, that.port);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(serviceName, serviceId, ipAddress, port);
+    }
 }
