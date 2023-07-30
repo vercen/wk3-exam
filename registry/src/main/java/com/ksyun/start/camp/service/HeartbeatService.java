@@ -25,7 +25,7 @@ public class HeartbeatService {
     public static final Map<String, Long> lastHeartbeatTimestamps = new ConcurrentHashMap<>();
     private static final long HEARTBEAT_TIMEOUT = 60000; // 心跳超时时间为60秒
     // 定时任务，每隔一段时间检查心跳超时
-    @Scheduled(fixedDelay = 10000) // 每隔10秒执行一次
+    @Scheduled(fixedDelay = 2000)   // 每隔2秒执行一次
     public void checkHeartbeatTimeout() {
         long currentTimestamp = System.currentTimeMillis();
         Set<String> inactiveServiceIds = new HashSet<>();
