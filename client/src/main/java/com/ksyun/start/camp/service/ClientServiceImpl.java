@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.ksyun.start.camp.ServiceAppRunner.serviceId;
+
 /**
  * 客户端服务实现
  */
@@ -30,7 +32,7 @@ public class ClientServiceImpl implements ClientService {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // 格式化为北京时间字符串
         String beijingTime = formatter.format(result);
-        String serviceId = timeDto.getServiceId();
+//        String serviceId = timeDto.getServiceId();
         String info = "Hello Kingsoft Clound Star Camp - [" + serviceId + "] - " + beijingTime;
         return info;
     }
