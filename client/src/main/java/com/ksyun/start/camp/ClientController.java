@@ -19,7 +19,7 @@ public class ClientController {
             String info = clientService.getInfo();
             return new ApiResponse(null, info);
         } catch (Exception e) {
-            return new ApiResponse("授时服务器不存在", null);
+            return new ApiResponse("[授时服务器不存在]", null);
         }
     }
 

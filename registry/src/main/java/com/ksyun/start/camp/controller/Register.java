@@ -16,6 +16,7 @@ import java.util.List;
 
 import static com.ksyun.start.camp.service.HeartbeatService.lastHeartbeatTimestamps;
 import static com.ksyun.start.camp.service.RegisterService.serviceIdToName;
+import static com.ksyun.start.camp.service.RegisterService.serviceRegistry;
 
 /**
  * @author vercen
@@ -57,13 +58,21 @@ public class Register {
     public Object heartbeat(@RequestBody HeartbeatDto heartbeatDto) {
         String serviceId = heartbeatDto.getServiceId();
         if (serviceId != null&&serviceIdToName.containsKey(serviceId)) {
-            log.info("检测到服务实例 {} 心跳", serviceId);
-            lastHeartbeatTimestamps.put(serviceId, System.currentTimeMillis());
-            return RespBean.success(RespBeanEnum.HEARTBEAT);
+            //增加防御检测
+            String serviceName = serviceIdToName.get(serviceId);
+            RegisterDto registerDto = serviceRegistry.get(serviceName).get(serviceId);
+
+            if (registerDto.getIpAddress().equals(heartbeatDto.getIpAddress())&&
+                    registerDto.getPort().equals(heartbeatDto.getPort())) {
+                log.info("检测到服务实例 {} 心跳", serviceId);
+                lastHeartbeatTimestamps.put(serviceId, System.currentTimeMillis());
+                return RespBean.success(RespBeanEnum.HEARTBEAT);
+            }else {
+                return RespBean.error(RespBeanEnum.SERVICE_NOT_EXISTS);
+            }
         }else {
             return RespBean.error(RespBeanEnum.SERVICE_NOT_EXISTS);
         }
-
     }
 
     //服务发现
