@@ -33,6 +33,7 @@ public class ClientServiceImpl implements ClientService {
         // 格式化为北京时间字符串
         String beijingTime = formatter.format(result);
 //        String serviceId = timeDto.getServiceId();
-        return "Hello Kingsoft Clound Star Camp - [" + serviceId + "] - " + beijingTime;
+        //"Hello Kingsoft Clound Star Camp - [服务 ID] - 2023-07-25 12:34:56"
+        return "Hello Kingsoft Clound Star Camp - " + serviceId + " - " + beijingTime;
     }
 }
