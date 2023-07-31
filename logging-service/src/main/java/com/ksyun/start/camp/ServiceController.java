@@ -2,6 +2,7 @@ package com.ksyun.start.camp;
 
 import com.ksyun.start.camp.dto.LogMessageDto;
 import com.ksyun.start.camp.service.LoggingService;
+import com.ksyun.start.camp.utils.RespBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,21 +19,21 @@ public class ServiceController {
 
     // TODO: 实现日志服务 API
     @PostMapping("/logging")
-    public String logMessage(@RequestBody LogMessageDto logMessage) {
+    public Object logMessage(@RequestBody LogMessageDto logMessage) {
         boolean success = loggingService.saveLog(logMessage);
         if (success) {
-            return "日志保存成功。";
+            return RespBean.success("保存日志成功。");
         } else {
-            return "保存日志失败。";
+            return RespBean.error("保存日志失败。");
         }
     }
 
     @GetMapping("/list")
-    public List<LogMessageDto> getLogs(@RequestParam(required = false) String service) {
+    public Object getLogs(@RequestParam(required = false) String service) {
         if (service != null) {
-            return loggingService.getLogsByService(service);
+            return RespBean.success(loggingService.getLogsByService(service)) ;
         } else {
-            return loggingService.getAllLogs();
+            return RespBean.success(loggingService.getAllLogs()) ;
         }
     }
 

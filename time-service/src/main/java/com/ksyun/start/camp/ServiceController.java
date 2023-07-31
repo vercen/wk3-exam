@@ -1,6 +1,7 @@
 package com.ksyun.start.camp;
 
 import com.ksyun.start.camp.service.SimpleTimeServiceImpl;
+import com.ksyun.start.camp.utils.RespBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +19,10 @@ public class ServiceController {
     // 在此实现简单时间服务的接口逻辑
     // 1. 调用 SimpleTimeService
     @GetMapping("/getDateTime")
-    public ApiResponse getDateTime(@RequestParam("style") String style) {
+    public Object getDateTime(@RequestParam("style") String style) {
         String dateTime = simpleTimeService.getDateTime(style);
-        return new ApiResponse(dateTime, serviceId);
+        ApiResponse apiResponse = new ApiResponse(dateTime, serviceId);
+        return RespBean.success(apiResponse);
     }
 
 }

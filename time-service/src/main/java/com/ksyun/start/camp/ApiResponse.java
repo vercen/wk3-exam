@@ -14,6 +14,7 @@ public class ApiResponse {
      * 代表此 API 的响应返回码
      * 200 表示成功，非 200 表示失败
      */
+
     private String result;
 
     private String serviceId;

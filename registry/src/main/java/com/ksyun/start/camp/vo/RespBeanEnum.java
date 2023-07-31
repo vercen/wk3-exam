@@ -18,6 +18,10 @@ public enum RespBeanEnum {
     UNREGISTERSUCCESS(200, "服务注销成功"),
     //心跳成功
     HEARTBEAT(200, "心跳成功"),
+    //服务发现成功
+    SERVICEFIND(200, "服务发现成功"),
+    // 服务发现失败
+    SERVICEFINDERROR(500, "服务发现失败"),
     // 服务注册失败
     ERROR(500, "服务注册失败"),
     // 服务已经存在

@@ -78,12 +78,12 @@ public class Register {
     //服务发现
     @GetMapping ("/api/discovery")
     @ResponseBody
-    public List<RegisterDto> discovery(@RequestParam(required = false) String name) {
+    public Object discovery(@RequestParam(required = false) String name) {
         if (name != null) {
             log.info("服务发现 {}" , name);
-            return discoveryService.get(name);
+            return RespBean.success(RespBeanEnum.SERVICEFIND,discoveryService.get(name));
         } else {
-            return discoveryService.getAll();
+            return RespBean.success(RespBeanEnum.SERVICEFIND,discoveryService.getAll()) ;
         }
     }
 

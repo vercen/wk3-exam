@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RespBean {
     private long code;
-    private String message;
-    private Object obj;
+    private String result;
+    private Object data;
 
     /**
      * 成功返回结果
@@ -32,6 +32,9 @@ public class RespBean {
      */
     public static RespBean success() {
         return new RespBean(RespBeanEnum.SUCCESS.getCode(), RespBeanEnum.SUCCESS.getMessage(), null);
+    }
+    public static RespBean success(RespBeanEnum respBeanEnum, Object obj) {
+        return new RespBean(respBeanEnum.getCode(), respBeanEnum.getMessage(), obj);
     }
     /**
      * 失败返回结果

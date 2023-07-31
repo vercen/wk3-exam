@@ -50,6 +50,10 @@ public class TimeServiceImpl implements TimeService {
                 if (entity != null) {
                     // 打印响应内容
                     String responseBody = EntityUtils.toString(entity);
+                    System.out.println("responseBody = " + responseBody);
+                    //从返回的json拿到data字段数据
+                    responseBody = objectMapper.readTree(responseBody).get("data").toString();
+                    System.out.println("responseBody处理后 = " + responseBody);
                     // 通过Jackson库将JSON字符串反序列化为RegisterDto的列表
                     CollectionType collectionType = objectMapper.getTypeFactory()
                             .constructCollectionType(List.class, RegisterDto.class);

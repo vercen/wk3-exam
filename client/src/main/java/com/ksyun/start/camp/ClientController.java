@@ -1,6 +1,7 @@
 package com.ksyun.start.camp;
 
 import com.ksyun.start.camp.service.ClientService;
+import com.ksyun.start.camp.utils.RespBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +15,14 @@ public class ClientController {
     private ClientService clientService;
     // 获取客户端信息接口
     @GetMapping("/api/getInfo")
-    public ApiResponse getInfo() {
+    public Object getInfo() {
         try {
             String info = clientService.getInfo();
-            return new ApiResponse(null, info);
+            ApiResponse apiResponse = new ApiResponse(null, info);
+            return RespBean.success(apiResponse);
         } catch (Exception e) {
-            return new ApiResponse("[授时服务器不存在]", null);
+            ApiResponse apiResponse = new ApiResponse("授时服务器不存在", null);
+            return RespBean.error(apiResponse);
         }
     }
 
