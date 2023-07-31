@@ -23,5 +23,9 @@ public class RespBean {
         return new RespBean(200, obj);
     }
 
+    public static RespBean error(Object obj) {
+        return new RespBean(500, obj);
+    }
+
 
 }

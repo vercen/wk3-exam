@@ -41,7 +41,7 @@ public class SimpleTimeServiceImpl implements SimpleTimeService {
                 formattedDateTime = String.valueOf(date.getTime());
                 break;
             default:
-                formattedDateTime = "Invalid style parameter. Supported styles: full, date, time, unix";
+                return null;
         }
 
         return formattedDateTime;
