@@ -81,6 +81,11 @@ public class TimeServiceImpl implements TimeService {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     String responseBody = EntityUtils.toString(entity);
+                    // 打印响应内容
+                    System.out.println("responseBody = " + responseBody);
+                    //从返回的json拿到data字段数据
+                    responseBody = objectMapper.readTree(responseBody).get("data").toString();
+                    System.out.println("responseBody处理后 = " + responseBody);
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     objectMapper.setDateFormat(dateFormat);
                     //设置时区北京
