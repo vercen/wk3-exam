@@ -13,7 +13,7 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
     // 获取客户端信息接口
-    @GetMapping("/getInfo")
+    @GetMapping("/api/getInfo")
     public ApiResponse getInfo() {
         try {
             String info = clientService.getInfo();

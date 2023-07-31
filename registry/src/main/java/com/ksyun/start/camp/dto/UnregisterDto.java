@@ -3,6 +3,7 @@ package com.ksyun.start.camp.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Objects;
 
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class UnregisterDto {
     private String serviceName; // 服务名称
     private String serviceId;   // 服务id

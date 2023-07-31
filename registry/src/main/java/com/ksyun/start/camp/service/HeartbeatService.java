@@ -1,5 +1,6 @@
 package com.ksyun.start.camp.service;
 
+import com.ksyun.start.camp.dto.RegisterDto;
 import com.ksyun.start.camp.dto.UnregisterDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.ksyun.start.camp.service.RegisterService.serviceIdToName;
+import static com.ksyun.start.camp.service.RegisterService.serviceRegistry;
 
 /**
  * @author vercen
@@ -44,7 +46,11 @@ public class HeartbeatService {
             UnregisterDto unregisterDto = new UnregisterDto();
             unregisterDto.setServiceId(serviceId);
             unregisterDto.setServiceName(serviceName);
-            unregisterService.unregister(unregisterDto);
+            Map<String, RegisterDto> serviceMap = serviceRegistry.get(unregisterDto.getServiceName());
+            serviceMap.remove(unregisterDto.getServiceId());
+            // 从服务id对应服务名称表中移除服务id
+            serviceIdToName.remove(unregisterDto.getServiceId());
+            //unregisterService.unregister(unregisterDto);
         }
         // 从心跳表中移除心跳超时的服务实例
         lastHeartbeatTimestamps.keySet().removeAll(inactiveServiceIds);

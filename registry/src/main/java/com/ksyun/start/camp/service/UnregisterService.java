@@ -29,6 +29,8 @@ public class UnregisterService {
                 //服务id存在，删除服务信息
                 //判断信息是否一样
                 RegisterDto registerDto = serviceMap.get(unregisterDto.getServiceId());
+                System.out.println( "registerDto = " + registerDto.toString());
+                System.out.println( "unregisterDto = " + unregisterDto.toString());
                 if (Objects.equals(registerDto.getIpAddress(), unregisterDto.getIpAddress()) && Objects.equals(registerDto.getPort(), unregisterDto.getPort())) {
                     serviceMap.remove(unregisterDto.getServiceId());
                     log.info("服务实例 {} 注销成功", unregisterDto.getServiceId());
