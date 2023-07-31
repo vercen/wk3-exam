@@ -22,7 +22,7 @@ public class ServiceController {
     public Object getDateTime(@RequestParam("style") String style) {
         String dateTime = simpleTimeService.getDateTime(style);
         if (dateTime == null) {
-            return RespBean.error("获取时间失败。");
+            return RespBean.error("参数样式不正确。");
         }
         ApiResponse apiResponse = new ApiResponse(dateTime, serviceId);
         return RespBean.success(apiResponse);
