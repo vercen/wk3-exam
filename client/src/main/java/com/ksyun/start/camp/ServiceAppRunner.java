@@ -59,7 +59,7 @@ public class ServiceAppRunner implements ApplicationRunner {
         this.servicePort = servicePort;
         this.registryUrl = registryUrl;
         this.logUrl = logUrl;
-        serviceId = DigestUtils.md5DigestAsHex((serviceName +serviceHost+servicePort).getBytes()).substring(0, 8);
+        serviceId = UUID.randomUUID().toString().substring(0, 8);
         registerDto = new RegisterDto(serviceName, serviceId, serviceHost, servicePort);
     }
 
