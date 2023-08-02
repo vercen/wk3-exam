@@ -18,11 +18,13 @@ public class ClientController {
     public Object getInfo() {
         try {
             String info = clientService.getInfo();
-            ApiResponse apiResponse = new ApiResponse(null, info);
-            return RespBean.success(apiResponse);
+//            ApiResponse apiResponse = new ApiResponse(null, info);
+            return ApiResponse.success(info);
+//            return RespBean.success(apiResponse);
         } catch (Exception e) {
-            ApiResponse apiResponse = new ApiResponse("授时服务器不存在", null);
-            return RespBean.error(apiResponse);
+//            ApiResponse apiResponse = new ApiResponse("授时服务器不存在", null);
+            return ApiResponse.error("授时服务器不存在");
+//            return RespBean.error(apiResponse);
         }
     }
 
