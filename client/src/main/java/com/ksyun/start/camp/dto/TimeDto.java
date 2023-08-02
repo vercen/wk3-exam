@@ -15,5 +15,4 @@ import java.util.Date;
 @NoArgsConstructor
 public class TimeDto {
     private Date result;
-    private String serviceId;
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -34,7 +35,7 @@ public class TimeServiceImpl implements TimeService {
     private RegisterDto timeRegisterDto;
 
     @Override
-    public TimeDto getDateTime(String style) {
+    public Date getDateTime(String style) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             // 连接到 registry 服务，获取远端服务列表
@@ -50,10 +51,10 @@ public class TimeServiceImpl implements TimeService {
                 if (entity != null) {
                     // 打印响应内容
                     String responseBody = EntityUtils.toString(entity);
-                    System.out.println("responseBody = " + responseBody);
+                    //System.out.println("responseBody = " + responseBody);
                     //从返回的json拿到data字段数据
                     responseBody = objectMapper.readTree(responseBody).get("data").toString();
-                    System.out.println("responseBody处理后 = " + responseBody);
+                    //System.out.println("responseBody处理后 = " + responseBody);
                     // 通过Jackson库将JSON字符串反序列化为RegisterDto的列表
                     CollectionType collectionType = objectMapper.getTypeFactory()
                             .constructCollectionType(List.class, RegisterDto.class);
@@ -82,16 +83,17 @@ public class TimeServiceImpl implements TimeService {
                 if (entity != null) {
                     String responseBody = EntityUtils.toString(entity);
                     // 打印响应内容
-                    System.out.println("responseBody = " + responseBody);
+                    //System.out.println("responseBody = " + responseBody);
                     //从返回的json拿到result字段数据
                     responseBody = objectMapper.readTree(responseBody).get("result").toString();
 //                    responseBody = objectMapper.readTree(responseBody).get("data").toString();
-                    System.out.println("responseBody处理后 = " + responseBody);
+                    //System.out.println("responseBody处理后 = " + responseBody);
+
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     objectMapper.setDateFormat(dateFormat);
                     //设置时区北京
                     objectMapper.setTimeZone(TimeZone.getTimeZone("GMT"));
-                    TimeDto timeDto = objectMapper.readValue(responseBody, TimeDto.class);
+                    Date timeDto = objectMapper.readValue(responseBody, Date.class);
                     return timeDto;
                 }
             }
