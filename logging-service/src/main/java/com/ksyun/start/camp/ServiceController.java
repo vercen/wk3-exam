@@ -24,7 +24,7 @@ public class ServiceController {
         if (success) {
             return RespBean.success("保存日志成功。");
         } else {
-            return RespBean.error("保存日志失败。");
+            return RespBean.error("重复日志，自动去重。");
         }
     }
 
